@@ -25,14 +25,14 @@ class Task
         //参数4  方法传入参数
         //参数5 是否循环一次就停止此定时器   true 一直循环  false 循环一次就停止
         //Timer::add(参数1, array(参数2, 参数3), 参数4, 参数5);
-        $client_id = "test";
-        $_SESSION['auth_timer_id'] = Timer::add(30, function($client_id){
-            Gateway::closeClient($client_id);
-        }, array($client_id), false);
+//        $client_id = "test";
+//        $_SESSION['auth_timer_id'] = Timer::add(30, function($client_id){
+//            Gateway::closeClient($client_id);
+//        }, array($client_id), false);
 
         // Timer::add(1, array('\App\Logic\ChargeRentalsLogic', 'autoScanRentTime'), [], true);
 //        Timer::add(1, array('\App\Logic\ChargeRentalsLogic', 'autoNotificationRentals24'), [], true);
 //        Timer::add(1, array('\App\Logic\ChargeRentalsLogic', 'autoNotificationRentals48'), [], true);
-//        Timer::add(1, array('\App\Logic\ChargeRentalsLogic', 'autoNotificationRentals72'), [], true);
+        Timer::add(1, array('\App\Logic\Common', 'test'), [], true);
     }
 }

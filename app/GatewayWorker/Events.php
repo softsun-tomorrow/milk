@@ -25,13 +25,13 @@ class Events
 {
 
     public static function onWorkerStart($businessWorker){
-        if(Redis::setnx( 'global_timer_lock', 'milk')){
+//        if(Redis::setnx( 'global_timer_lock', 'milk')){
             //进程启动开启定时任务
             $task = new Task;
             $task->start();
 
-            Redis::expire( 'global_timer_lock', 10);
-        }
+//            Redis::expire( 'global_timer_lock', 10);
+//        }
     }
 
     /**
