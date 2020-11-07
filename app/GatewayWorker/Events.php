@@ -87,7 +87,10 @@ class Events
                 $response['data'] = ['user' => (array)$user];
                 break;
             case 'is_login':
-                $userId = Redis::hget( 'online_user_client', $message->user_id);
+//                $userId = Redis::hget( 'online_user_client', $message->user_id);
+                if(Gateway::isUidOnline($message->user_id)){
+                    $userId = $message->user_id;
+                }
                 $response['data'] = ['user_id' => $userId??0];
                 break;
             default:
@@ -107,8 +110,8 @@ class Events
     {
         $userId = Redis::hget( 'online_client_user', $clientId);
 
-        Redis::hdel( 'online_user_client', $userId);
-        Redis::hdel( 'online_client_user', $clientId);
+//        Redis::hdel( 'online_user_client', $userId);
+//        Redis::hdel( 'online_client_user', $clientId);
 
         // 向所有人发送
         GateWay::sendToAll("$clientId logout\r\n");
@@ -116,13 +119,13 @@ class Events
 
     public static function onWorkerStop($businessWorker)
     {
-        $keys = Redis::hkeys( 'client_user');
-        foreach($keys as $clientId){
-            $userId = Redis::hget( 'client_user', $clientId);
+//        $keys = Redis::hkeys( 'client_user');
+//        foreach($keys as $clientId){
+//            $userId = Redis::hget( 'client_user', $clientId);
 
-            Redis::hdel( 'online_user_client', $userId);
-            Redis::hdel( 'online_client_user', $clientId);
-        }
+//            Redis::hdel( 'online_user_client', $userId);
+//            Redis::hdel( 'online_client_user', $clientId);
+//        }
         echo "WorkerStop\n";
     }
 
@@ -136,8 +139,8 @@ class Events
         }
         //redis 记录 client_id, user_id
         //如果连接关掉，则删除该redis记录
-        Redis::hset( 'online_client_user', $clientId, $userId);
-        Redis::hset( 'online_user_client', $userId, $clientId);
+//        Redis::hset( 'online_client_user', $clientId, $userId);
+//        Redis::hset( 'online_user_client', $userId, $clientId);
 
         if(!Gateway::isUidOnline($userId))
         {
