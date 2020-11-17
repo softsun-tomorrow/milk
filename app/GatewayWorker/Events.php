@@ -93,6 +93,10 @@ class Events
                 }
                 $response['data'] = ['user_id' => $userId??0];
                 break;
+            case 'logout':
+                Gateway::unbindUid($clientId, $message->user_id);
+                $response['data'] = ['user_id' => $userId??0];
+                break;
             default:
                 $response['errcode'] = 1100;
                 $response['msg'] = 'Undefined';
@@ -108,7 +112,7 @@ class Events
      */
     public static function onClose($clientId)
     {
-        $userId = Redis::hget( 'online_client_user', $clientId);
+//        $userId = Redis::hget( 'online_client_user', $clientId);
 
 //        Redis::hdel( 'online_user_client', $userId);
 //        Redis::hdel( 'online_client_user', $clientId);
